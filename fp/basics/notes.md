@@ -17,11 +17,9 @@ defined by Eric Elliot
 5. use Function Composition
 6. use Declarative code instead of Imperative code
 
-## sideEffects Example on code
+## 1. Avoiding sideEffects (Example on exercises/exercise1)
 
-## Avoid sharedState and Mutations
-
-## Avoiding Shared State
+## 3. Avoiding Shared State
 
 A program is considered stateful if it is designed to remember data from events or user interactions.
 The remembered information is called the state of the program.
@@ -34,7 +32,7 @@ The contents of this storage locations at any given moment while the program is 
 shared state is any variable, object, or memory space that exists in a shared scope, or as the property of an object being passed between scopes.
 A shared scope can include global scope or closure scopes.
 
-### Avoiding mutable data
+## 2. Avoiding mutable data
 
 mutable === changable,
 immutable === not changable
@@ -54,3 +52,41 @@ so one method to avoid mutaing is to clone the object
 ### Cloning the object
 
 we can clone object by using Object.assgin(obj) method method but it copies object in a shallow way such that nested objects are not cloned, when we try to change the nested object then it mutates the original object so we will be cloning objects by using JSON.parse(JSON.stringify(obj)) method
+
+## 5. using Function Composition
+
+Before diving into the concept we need to understand some basic concepts of FirstClass Functions, Higher Order Functions and Closures
+
+### Function Composition
+
+Function Composition is the combining of functions for the purpose of producing a new function or performing some new computation
+
+we need to understand what is the purpose of combining functions why do we actually need and what it accomplish?
+
+when using a FP programming paradigm, functions can be looked at in one of two ways as a procedure or a function
+
+in FP we want to create function not procedure
+
+so what is the difference between them
+
+### Procedure
+
+A procedure is a collection of functionality, it may have inputs or may not it may have return values or may not and it frequently does its work by working on a shared state.
+
+### functions
+
+They are based on the ideas that come from mathematical functions.
+
+- Functions have an input
+- Functions retun a value
+- Functions are simplified to a single task
+
+Every function is so specific that it accomplishes a small amount of work and it makes them easy to reuse
+
+Then we will combine those many resuable functions to acheive a big task this is what functinal composition is
+
+A functional programmer sees every function in their program like a little lego piece. They recognize the blue 2x2 brick at a glance, and know exactly how it works and what they can do with it. As they go about building a bigger complex lego model, as they need each next piece, they already have an instinct for which of their many spare pieces to grab.
+
+But sometimes you take the blue 2X2 brick and the gray 4X1 brick and put them together in a certain way, and you realize, "that's a useful piece that I need often"
+
+- Kyle Thompson
