@@ -88,9 +88,6 @@ Then we will combine those many resuable functions to acheive a big task this is
 A functional programmer sees every function in their program like a little lego piece. They recognize the blue 2x2 brick at a glance, and know exactly how it works and what they can do with it. As they go about building a bigger complex lego model, as they need each next piece, they already have an instinct for which of their many spare pieces to grab.
 
 But sometimes you take the blue 2X2 brick and the gray 4X1 brick and put them together in a certain way, and you realize, "that's a useful piece that I need often"
-
-- Kyle Thompson
+Kyle Thompson
 
 understand how to use compose or pipe for composing functions from concepts/compose
-
-### Arity and how it effects composition
