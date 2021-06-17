@@ -90,3 +90,7 @@ A functional programmer sees every function in their program like a little lego 
 But sometimes you take the blue 2X2 brick and the gray 4X1 brick and put them together in a certain way, and you realize, "that's a useful piece that I need often"
 
 - Kyle Thompson
+
+understand how to use compose or pipe for composing functions from concepts/compose
+
+### Arity and how it effects composition
