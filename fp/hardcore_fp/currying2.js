@@ -20,7 +20,7 @@
 // this is just an example of some like actual calculation function.
 // we are gonna be running our entire program in terms of these calculation functions
 
-const add = (x, y) => x + y;
+// const add = (x, y) => x + y;
 // functions take one put and give you one output
 
 // add([1, 2]);
@@ -52,8 +52,9 @@ const add = (x, y) => x + y;
 
 // currying
 
-const curry = (f) => (x) => (y) => f(x, y);
+// const curry = (f) => (x) => (y) => f(x, y);
 
+const { curry, pipe } = require("ramda");
 // const curriedAdd = curry(add);
 
 // const increment = curriedAdd(1);
@@ -89,14 +90,27 @@ const curry = (f) => (x) => (y) => f(x, y);
 // const result = getOdds([1, 2, 3, 4, 5]);
 // console.log(result); // [1,3,5]
 
-// const replaceIt = curry((regex, replacement, str) =>
-//   str.replace(regex, replacement)
-// );
-
-// const replaceVowels = replaceIt(/[AEIOU]/gi, "!");
-
-// const result = replaceVowels("Hey I have some words");
-
-// console.log(result);
-
 // partial application
+
+// one more example of piping
+
+// const add = curry((x, y) => x + y);
+
+// const double = (x) => x + x;
+
+// const addExtra = curry((x, y) => x + y);
+
+// const subtract = curry((x, y) => y - x);
+
+// const getResult = pipe(add(5), double, addExtra(5), subtract(10));
+
+// console.log(getResult(5));
+
+const replaceIt = curry((regex, replacement, str) =>
+  str.replace(regex, replacement)
+);
+
+const replaceVowels = replaceIt(/[AEIOU]/gi, "!");
+
+const result = replaceVowels("I have words haha");
+console.log(result);
