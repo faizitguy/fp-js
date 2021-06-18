@@ -91,3 +91,18 @@ But sometimes you take the blue 2X2 brick and the gray 4X1 brick and put them to
 Kyle Thompson
 
 understand how to use compose or pipe for composing functions from concepts/compose
+
+### Currying
+
+A curried function is a function that takes multiple arguments one at a time.
+
+currying is where a function that expects multiple arguments broken down into successive functions
+that each take a single argument and return another function to accept the next argument
+
+Partial applications can take as many or as few arguments a time as desired.
+Curried functions on the other hand always return a unary function : a function which takes only one argument
+
+### Advantages of currying
+
+1. Currying can be used to specialize functions
+2. It simplifies function composition
