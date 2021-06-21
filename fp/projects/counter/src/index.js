@@ -44,7 +44,7 @@ const messages = {
 // impure => state, side Effect (Interacting with DOM)
 // pure => initModel, update, view
 
-// impure code below
+// impure functions below
 
 function app(initModel, update, view, node) {
   let model = initModel;
@@ -55,8 +55,12 @@ function app(initModel, update, view, node) {
   function dispatch(msg) {
     model = update(msg, model);
     const updatedView = view(dispatch, model);
+
+    // virtual dom, diffing and reconciliation
+
     const patches = diff(currentView, updatedView);
     rootNode = patch(rootNode, patches);
+
     currentView = updatedView;
   }
 }
