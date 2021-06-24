@@ -1,59 +1,73 @@
-// procedural function
+// // procedural function
+
+// // str = "Innovation distinguishes between a leader and a follower.";
+// // let prepareString = function () {
+// //   let str1 = str.trim();
+// //   let str2 = str1.replace(/[?.,!]/g, "");
+// //   let str3 = str2.toUpperCase();
+// //   let arr = str3.split(" ");
+
+// //   for (let i = 0; i < arr.length; i++) {
+// //     if (arr[i] === "A" || arr[i] === "AN" || arr[i] === "THE") {
+// //       arr.splice(i, 1);
+// //     }
+// //   }
+// //   return arr;
+// // };
 
 // str = "Innovation distinguishes between a leader and a follower.";
-// let prepareString = function () {
-//   let str1 = str.trim();
-//   let str2 = str1.replace(/[?.,!]/g, "");
-//   let str3 = str2.toUpperCase();
-//   let arr = str3.split(" ");
 
-//   for (let i = 0; i < arr.length; i++) {
-//     if (arr[i] === "A" || arr[i] === "AN" || arr[i] === "THE") {
-//       arr.splice(i, 1);
-//     }
-//   }
-//   return arr;
-// };
+// const trim = (str) => str.replace(/^\s*|\s*$/g, "");
 
-str = "Innovation distinguishes between a leader and a follower.";
+// const noPunct = (str) => str.replace(/[?.,!]/g, "");
 
-const trim = (str) => str.replace(/^\s*|\s*$/g, "");
+// const capitalize = (str) => str.toUpperCase();
 
-const noPunct = (str) => str.replace(/[?.,!]/g, "");
+// const breakout = (str) => str.split(" ");
 
-const capitalize = (str) => str.toUpperCase();
+// const noArticles = (str) => str !== "A" && str !== "AN" && str !== "THE";
 
-const breakout = (str) => str.split(" ");
+// const filterArticles = (arr) => arr.filter(noArticles);
 
-const noArticles = (str) => str !== "A" && str !== "AN" && str !== "THE";
+// //console.log(filterArticles(breakout(capitalize(noPunct(trim(str))))));
 
-const filterArticles = (arr) => arr.filter(noArticles);
-
-//console.log(filterArticles(breakout(capitalize(noPunct(trim(str))))));
-
-const pipe = function (...fns) {
-  return function (x) {
-    return fns.reduce(function (v, f) {
-      return f(v);
-    }, x);
-  };
-};
-
-// const compose = function (...fns) {
+// const pipe = function (...fns) {
 //   return function (x) {
-//     return fns.reduceRight(function (v, f) {
+//     return fns.reduce(function (v, f) {
 //       return f(v);
 //     }, x);
 //   };
 // };
 
-const prepareString = pipe(trim, noPunct, capitalize, breakout, filterArticles);
+// // const compose = function (...fns) {
+// //   return function (x) {
+// //     return fns.reduceRight(function (v, f) {
+// //       return f(v);
+// //     }, x);
+// //   };
+// // };
 
-/*const prepareString = compose(
-    filterArticles, 
-    breakout, 
-    capitalize, 
-    noPunct, 
-    trim);*/
+// const prepareString = pipe(trim, noPunct, capitalize, breakout, filterArticles);
 
-console.log(prepareString(str));
+// /*const prepareString = compose(
+//     filterArticles,
+//     breakout,
+//     capitalize,
+//     noPunct,
+//     trim);*/
+
+// console.log(prepareString(str));
+
+function checkLength(string) {
+  let str1 = string.trim();
+  let str2 = string.split(" ");
+  let len = str2.length;
+  return len;
+}
+
+const trim = (str) => str.trim();
+const split = (str) => str.split(" ");
+const check = (arr) => arr.length;
+
+console.log(check(split(trim("Faiz Ahmed Khan"))));
+// console.log(checkLength("Faiz Ahmed Khan"));
