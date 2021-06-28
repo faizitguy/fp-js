@@ -106,3 +106,21 @@ Curried functions on the other hand always return a unary function : a function 
 
 1. Currying can be used to specialize functions
 2. It simplifies function composition
+
+## Imperative versus Declarative Programming
+
+### Imperative Programming
+
+- Imperative programming is a style that tells computer how to accomplish the task
+
+### Declarative Programming
+
+- It expresses the logic of a program without identifying the control flow.
+- Control flow is abstracted away, so declarative code only needs to specify what to do.
+
+### Example
+
+- If you want to tell the address of your place what will be your approach
+- you could say the exact location or address to anyone or you could start giving instructions go right, take left etc.,
+- Giving instructions => Imperative Approach
+- Giving exact Address => Declarative Approach
