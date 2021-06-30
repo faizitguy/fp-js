@@ -124,3 +124,14 @@ Curried functions on the other hand always return a unary function : a function 
 - you could say the exact location or address to anyone or you could start giving instructions go right, take left etc.,
 - Giving instructions => Imperative Approach
 - Giving exact Address => Declarative Approach
+
+## Functors
+
+- Any class(or construction function) or a datatype that stores a value and implements “map” method is called a “Functor”.
+
+- For example: An Array is a “Functor”. Because an Array can store values and has “map” method that allows us to map a function to the values it’s storing.
+
+## Monads
+
+- Monads are also Functors, i.e. they have “map” method but implements more methods than just “map”.
+- In JS, Monads are classes or constructor functions that store some data and implements “map”, “ap”, “of” and “chain” methods that do something with the stored data as per spec.

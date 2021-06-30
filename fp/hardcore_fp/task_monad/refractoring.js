@@ -22,7 +22,7 @@ const fs = require("fs");
 // let's try to make a pure functions
 
 const readFile = (path, enc) =>
-  Task((res, rej) =>
+  Task((rej, res) =>
     fs.readFile(path, enc, (err, contents) => (err ? rej(err) : res(contents)))
   );
 
