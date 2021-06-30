@@ -38,117 +38,168 @@ const DB_REGEX = /postgres:\/\/([^:]+):([^@]+)@.*?\/(.+)$/i;
 
 // Ex1: Refactor streetName to use Either instead of nested if's
 // =========================
-const street_ = (user) => {
-  const address = user.address;
+// const street_ = (user) => {
+//   const address = user.address;
 
-  if (address) {
-    return address.street;
-  } else {
-    return "no street";
-  }
+//   if (address) {
+//     return address.street;
+//   } else {
+//     return "no street";
+//   }
+// };
+
+// // example1 answer
+
+// const street = (user) =>
+//   fromNullable(user.address) // Right or Left (address)
+//     .map((address) => address.street)
+//     .fold(
+//       () => "no street",
+//       (x) => x
+//     );
+
+// QUnit.test("Ex1: street", (assert) => {
+//   const user = { address: { street: { name: "Willow" } } };
+//   assert.deepEqual(street(user), { name: "Willow" });
+//   assert.equal(street({}), "no street");
+// });
+
+// // Ex1: Refactor streetName to use Either instead of nested if's
+// // =========================
+// const streetName_ = (user) => {
+//   const address = user.address;
+
+//   if (address) {
+//     const street = address.street;
+
+//     if (street) {
+//       return street.name;
+//     }
+//   }
+
+//   return "no street";
+// };
+
+// // example2 answer
+
+// const streetName = (user) =>
+//   fromNullable(user.address)
+//     .chain((address) => fromNullable(address.street))
+//     .map((street) => street.name)
+//     .fold(
+//       () => "no street",
+//       (x) => x
+//     );
+
+// QUnit.test("Ex1: streetName", (assert) => {
+//   const user = { address: { street: { name: "Willow" } } };
+//   assert.equal(streetName(user), "Willow");
+//   assert.equal(streetName({}), "no street");
+//   assert.equal(streetName({ address: { street: null } }), "no street");
+// });
+
+// // Ex2: Refactor parseDbUrl to return an Either instead of try/catch
+// // =========================
+// const parseDbUrl_ = (cfg) => {
+//   try {
+//     const c = JSON.parse(cfg); // throws if it can't parse
+//     return c.url.match(DB_REGEX);
+//   } catch (e) {
+//     return null;
+//   }
+// };
+
+// // example3 answer
+
+// const parseDbUrl = (cfg) =>
+//   tryCatch(() => JSON.parse(cfg))
+//     .map((c) => c.url.match(DB_REGEX))
+//     .fold(
+//       (x) => null,
+//       (x) => x
+//     );
+
+// QUnit.test("Ex1: parseDbUrl", (assert) => {
+//   const config = '{"url": "postgres://sally:muppets@localhost:5432/mydb"}';
+//   assert.equal(parseDbUrl(config)[1], "sally");
+//   assert.equal(parseDbUrl(), null);
+// });
+
+// // Ex3: Using Either and the functions above, refactor startApp
+// // =========================
+// const startApp_ = (cfg) => {
+//   const parsed = parseDbUrl(cfg);
+
+//   if (parsed) {
+//     const [_, user, password, db] = parsed;
+//     return `starting ${db}, ${user}, ${password}`;
+//   } else {
+//     return "can't get config";
+//   }
+// };
+
+// // example4 answer
+// const startApp = (cfg) =>
+//   fromNullable(parseDbUrl(cfg))
+//     .map(([_, user, password, db]) => `starting ${db}, ${user}, ${password}`)
+//     .fold(
+//       () => "can't get config",
+//       (x) => x
+//     );
+
+// QUnit.test("Ex3: startApp", (assert) => {
+//   const config = '{"url": "postgres://sally:muppets@localhost:5432/mydb"}';
+//   assert.equal(String(startApp(config)), "starting mydb, sally, muppets");
+//   assert.equal(String(startApp()), "can't get config");
+// });
+
+// extra examples
+
+// check if there is state present in the address
+const address = {
+  state: "andhra",
+  city: "kadapa",
+  street: "nabikot",
 };
 
-// example1 answer
+// const state_ = (address) => {
+//   if (address.state) {
+//     return address.state;
+//   } else {
+//     return "there is no state";
+//   }
+// };
 
-const street = (user) =>
-  fromNullable(user.address) // Right or Left (address)
-    .map((address) => address.street)
-    .fold(
-      () => "no street",
-      (x) => x
-    );
+// const state = (address) =>
+//   fromNullable(address.state) // Right or Left(address.state)
+//     .map((state) => state)
+//     .fold(
+//       () => "there is no state",
+//       (x) => x
+//     );
 
-QUnit.test("Ex1: street", (assert) => {
-  const user = { address: { street: { name: "Willow" } } };
-  assert.deepEqual(street(user), { name: "Willow" });
-  assert.equal(street({}), "no street");
-});
+// console.log(state(address));
 
-// Ex1: Refactor streetName to use Either instead of nested if's
-// =========================
-const streetName_ = (user) => {
-  const address = user.address;
+// extra example2
 
-  if (address) {
-    const street = address.street;
+// check if there is a state called andhra in the object nested condition
 
-    if (street) {
-      return street.name;
+const checkAndhra_ = (address) => {
+  if (address.state) {
+    if (address.state === "andhra") {
+      return address.state;
     }
   }
 
-  return "no street";
+  return "no state";
 };
-
-// example2 answer
-
-const streetName = (user) =>
-  fromNullable(user.address)
-    .chain((address) => fromNullable(address.street))
-    .map((street) => street.name)
+const checkAndhra = (address) =>
+  fromNullable(address.state)
+    .chain((state) => fromNullable(state === "andhra"))
+    .map((state) => (state ? "andhra" : "no andhra"))
     .fold(
-      () => "no street",
+      () => "null",
       (x) => x
     );
 
-QUnit.test("Ex1: streetName", (assert) => {
-  const user = { address: { street: { name: "Willow" } } };
-  assert.equal(streetName(user), "Willow");
-  assert.equal(streetName({}), "no street");
-  assert.equal(streetName({ address: { street: null } }), "no street");
-});
-
-// Ex2: Refactor parseDbUrl to return an Either instead of try/catch
-// =========================
-const parseDbUrl_ = (cfg) => {
-  try {
-    const c = JSON.parse(cfg); // throws if it can't parse
-    return c.url.match(DB_REGEX);
-  } catch (e) {
-    return null;
-  }
-};
-
-// example3 answer
-
-const parseDbUrl = (cfg) =>
-  tryCatch(() => JSON.parse(cfg))
-    .map((c) => c.url.match(DB_REGEX))
-    .fold(
-      (x) => null,
-      (x) => x
-    );
-
-QUnit.test("Ex1: parseDbUrl", (assert) => {
-  const config = '{"url": "postgres://sally:muppets@localhost:5432/mydb"}';
-  assert.equal(parseDbUrl(config)[1], "sally");
-  assert.equal(parseDbUrl(), null);
-});
-
-// Ex3: Using Either and the functions above, refactor startApp
-// =========================
-const startApp_ = (cfg) => {
-  const parsed = parseDbUrl(cfg);
-
-  if (parsed) {
-    const [_, user, password, db] = parsed;
-    return `starting ${db}, ${user}, ${password}`;
-  } else {
-    return "can't get config";
-  }
-};
-
-// example4 answer
-const startApp = (cfg) =>
-  fromNullable(parseDbUrl(cfg))
-    .map(([_, user, password, db]) => `starting ${db}, ${user}, ${password}`)
-    .fold(
-      () => "can't get config",
-      (x) => x
-    );
-
-QUnit.test("Ex3: startApp", (assert) => {
-  const config = '{"url": "postgres://sally:muppets@localhost:5432/mydb"}';
-  assert.equal(String(startApp(config)), "starting mydb, sally, muppets");
-  assert.equal(String(startApp()), "can't get config");
-});
+console.log(checkAndhra(address));
