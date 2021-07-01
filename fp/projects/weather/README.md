@@ -13,5 +13,3 @@ npm run dev
 ```
 
 Open `dist/index.html` to view app in Browser.
-
-Add API key from https://home.openweathermap.org/api_keys in `src/key.js`, as specified in `src/key.example.js`.
