@@ -17,8 +17,8 @@ import { Task } from "types";
 
 // Task.of(2).map((two) => two + 2); // Task(2)
 
-const t1 = Task((rej, res) => res(2).map((two) => two + 1)).map(
+const t1 = new Task((rej, res) => res(2).map((two) => two + 1)).map(
   (three) => three * 2
 );
 
-console.log(t1);
+t1.fork(console.error, console.log);
