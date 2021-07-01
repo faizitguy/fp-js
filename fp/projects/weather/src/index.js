@@ -1,8 +1,16 @@
 import { API_KEY } from "./key";
 import { OpenWeather } from "./open_weather";
+import "./styles.css";
 
 // create a weather module with the private functions
 // render results on the screen
+
+const getWeatherItems = (cityName) =>
+  OpenWeather.fetch({ cityName, API_KEY })
+    .map((response) => JSON.stringify(response.main.temp))
+    .map((x) => weatherCard(x));
+
+const weatherCard = (temp) => `<div><h1> toCelc${temp}</h1></div> `;
 
 // ============================= Every above this line will be pure
 
@@ -13,7 +21,10 @@ const app = () => {
 
   button.addEventListener("click", () => {
     const cityName = input.value.trim();
-    OpenWeather.fetch({ cityName, API_KEY }).fork(console.error, console.log);
+    getWeatherItems(cityName).fork(
+      console.error,
+      (html) => (results.innerHTML = html)
+    );
   });
 };
 

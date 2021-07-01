@@ -7,8 +7,8 @@ const getOpenWeatherUrl = ({ cityName, API_KEY }) =>
 const fetchIt = (url) =>
   Task((rej, res) =>
     fetch(url)
-      .then(res)
       .then((x) => x.json())
+      .then(res)
       .catch(rej)
   );
 
