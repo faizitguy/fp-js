@@ -10,7 +10,7 @@ const getWeatherItems = (cityName) =>
     .map((response) => JSON.stringify(response.main.temp))
     .map((x) => weatherCard(x));
 
-const weatherCard = (temp) => `<div><h1> toCelc${temp}</h1></div> `;
+const weatherCard = (temp) => `<div><h1> ${temp}</h1></div> `;
 
 // ============================= Every above this line will be pure
 
