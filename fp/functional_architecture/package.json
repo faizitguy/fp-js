@@ -1,0 +1,17 @@
+{
+  "name": "functional_architecture",
+  "version": "1.0.0",
+  "main": "Intro.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "immutable-ext": "^1.1.5"
+  },
+  "devDependencies": {},
+  "description": ""
+}
