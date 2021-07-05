@@ -4,7 +4,7 @@
 //   fold: (f) => f(x),
 // });
 
-const { filter } = require("ramda");
+// const { filter } = require("ramda");
 
 // // const result = nextCharForNumberString(" 64 ");
 
@@ -51,19 +51,34 @@ const Box = (x) => ({
 
 const first = (xs) => xs[0];
 
-const halfTheFirstLargeNumber_ = (xs) => {
-  const found = xs.filter((x) => x >= 20);
-  const answer = first(found) / 2;
-  return `The answer is ${answer}`;
-};
+// const halfTheFirstLargeNumber_ = (xs) => {
+//   const found = xs.filter((x) => x >= 20);
+//   const answer = first(found) / 2;
+//   return `The answer is ${answer}`;
+// };
 
-const compose = (f, g) => (x) => Box(x).map(g).map(f);
+// const compose = (f, g) => (x) => Box(x).map(g).map(f);
 
-const halfTheFirstLargeNumber = (xs) =>
-  Box(xs)
-    .map((xs) => xs.filter((x) => x >= 20))
-    .map((found) => first(found) / 2)
-    .fold((answer) => `The answer is ${answer}`);
+// const halfTheFirstLargeNumber = (xs) =>
+//   Box(xs)
+//     .map((xs) => xs.filter((x) => x >= 20))
+//     .map((found) => first(found) / 2)
+//     .fold((answer) => `The answer is ${answer}`);
 
-const res = halfTheFirstLargeNumber([1, 4, 50]);
-console.log(res);
+// const res = halfTheFirstLargeNumber([1, 4, 50]);
+// console.log(res);
+
+// const printLength = (str) => {
+//   const trimmedStr = str.trim();
+//   const strLength = trimmedStr.length;
+//   return strLength;
+// };
+
+// const printStrLength = (str) =>
+//   Box(str)
+//     .map((x) => x.trim())
+//     .map((trimmedStr) => trimmedStr.length)
+//     .fold((res) => res);
+
+// const res = printStrLength("Faiz Ahmed Khan");
+// console.log(res);

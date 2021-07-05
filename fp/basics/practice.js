@@ -4,7 +4,7 @@ const add = (x, y) => x + y;
 
 // const result = toPair(add)(2, 3);
 
-const curry = (f) => (x) => (y) => f(x, y);
+// const curry = (f) => (x) => (y) => f(x, y);
 // const curriedAdd = curry(add);
 // const increment = curriedAdd(1);
 // const result = increment(2);
@@ -43,3 +43,54 @@ const curry = (f) => (x) => (y) => f(x, y);
 
 // const result = exclaimStr("faiz");
 // console.log(result);
+
+function curry(fn, arity = fn.length) {
+  return (function nextCurried(prevArgs) {
+    return function curried(nextArg) {
+      var args = [...prevArgs, nextArg];
+
+      if (args.length >= arity) {
+        return fn(...args);
+      } else {
+        return nextCurried(args);
+      }
+    };
+  })([]);
+}
+
+const pipe = function (...fns) {
+  return function (x) {
+    return fns.reduce(function (v, f) {
+      return f(v);
+    }, x);
+  };
+};
+
+const compose = function (...fns) {
+  return function (x) {
+    return fns.reduceRight(function (v, f) {
+      return f(v);
+    }, x);
+  };
+};
+
+const getFullName = (firstName, lastName) => {
+  const fName = firstName.trim();
+  const fNameCap = fName.toUpperCase();
+  const lName = lastName.trim();
+  const lNameCap = lName.toUpperCase();
+  const fullName = fNameCap + " " + lNameCap;
+  return fullName;
+};
+
+// rewrite the code with fp
+
+// pure functions
+
+const capitalize = (str) => str.toUpperCase();
+const trimStr = (str) => str.trim();
+const joinName = (fName, lName) => fName + " " + lName;
+
+const getName = compose(curry(joinName)("faiz"), capitalize, trimStr);
+const res = getName("khan");
+console.log(res);
