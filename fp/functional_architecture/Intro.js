@@ -9,7 +9,7 @@
 // and we have datatypes and we group data into these little bundles and then we give those names
 // and we have names to top of names it could be like a giant cloud of names
 
-// domain driven design by eric evans
+// domain driven design by eric evans => book name
 // this book tells you how coding by metaphor and using these names and really getting into
 // the zone of using ubiquitous language to model the real world
 
@@ -26,7 +26,8 @@
 // how does it interact with others
 // we will be focusing on the properties => associative, commutative, identity, distributive
 
-// these laws protect us from just the confusion of the name alone
+// these 4  laws protect us from just the confusion of the name alone
+
 // =============================
 
 // class User {
@@ -58,7 +59,7 @@
 const user = { firstName: "faiz", lastName: "khan" };
 const joinWithSpace = (joinable) => joinable.join(" ");
 // here joinWithSpace nothing will do other than joining because it nothing knows about its data type
-// by generalizing we are making less possibility and simplier implementations, more resuse and it becomes
+// by generalizing we are making less possibility,  simplier implementations and  more resuse and it becomes
 // more generic genaralized function
 // we are recovering encapsulation
 // by hiding information effectively
@@ -72,3 +73,33 @@ const identity = (a) => a;
 
 // by generalizing it to its logical end we're actually doing information hiding and protecting ourselves from rippling
 // changes across our application
+
+joinWithSpace("a", "b", "c"); // 'a b c'
+joinWithSpace(joinWithSpace("a", "b"), "c"); // 'a b c'
+joinWithSpace(a, joinWithSpace("b", "c")); // 'a b c'
+
+// here we can notice that joinWithSpace is associative down here
+// It doesn't matter how we group them
+// joinWithSpace is reusable utility now. It's not stuck and tied to an object to be written again and again
+
+// so we want highly generlized principles it's a good guiding principle
+// we will be keep abstracting away until we programming to the most minimal interface then we will get the maximum
+// reuse and information hiding
+// if you change your program here and there it's not gonna ripple
+
+// => creating generalized functions to make the code simplier, easier, robust, reusable and hide information(encapsulation and abstraction)
+
+// =========================================================
+
+// composition architecture
+
+// let's suppose we've two types one is where we have a bunch of little functions which does one thing
+// and another type is where we've a big function that does one big thing
+// let's understand what are the usecases and disadvantages of them both
+// little functions => benefits => inifinite usecases, simple and understandable functions, mostly reusable
+// little functions => disadvantages => harger to change implementation, harder for user to compose
+// big function => benefits => flexibility in implementation changes
+// big function => disadvantages => won't satisfy all cases, less reusability, less cases to support
+
+// for the bunch of functions we've laws of composition applied and we can compose it in many different ways
+// mostly we'll be focusing on writing little bunch of functions which we can compose for reusability
