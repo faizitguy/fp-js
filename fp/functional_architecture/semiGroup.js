@@ -1,5 +1,8 @@
 // semigroup
 
+// semigroup => associative + closed(magma)
+// monoid => semigroup + Identity
+
 // 1 + 2 + 3;
 // 1 + (2 + 3) = (1 + 2) + 3 => associative and closed
 // if we add a bunch of integers we never break out of integers always get integers back => closed
@@ -68,12 +71,16 @@
 // Sum.empty = () => Sum(0);
 
 // const res = [1, 2, 3, 4, 5].map(Sum).reduce((acc, n) => acc.concat(n)); // 5
-// const res = [].map(Sum).reduce((acc, n) => acc.concat(n)); //  Reduce of empty array with no initial value
+// const res = [].map(Sum).reduce((acc, n) => acc.concat(n)); //  Error : Reduce of empty array with no initial value
 // const res = [].map(Sum).reduce((acc, n) => acc.concat(n), Sum.empty()); // 0
 // we have a way to proceed in our program eventhough we didn't have any data to process right now
 // we can still provide some kinda value
 
 // console.log(res);
+
+// ============================================================
+// foldMap
+
 // const { List } = require("immutable-ext");
 // const All = (x) => ({
 //   x,
@@ -82,7 +89,7 @@
 
 // All.empty = () => All(true);
 // // const res = [true, true].map(All).reduce((ac, n) => ac.concat(n), All.empty());
-// const res = List([true, true]).foldMap(All, All.empty());
+// const res = List([true, true]).foldMap(All, All.empty()); // foldMap method does all that
 // console.log(res);
 
 // const Inetrsection = (x) => ({
@@ -99,29 +106,29 @@
 // functors are monoids
 // we will be using monoids and semi groups interchangeably
 
-const { Id, Task, Either } = require("./lib/types");
-const { Left, Right } = Either;
-const { List } = require("immutable-ext");
+// const { Id, Task, Either } = require("./lib/types");
+// const { Left, Right } = Either;
+// const { List } = require("immutable-ext");
 
-const Sum = (x) => ({
-  x,
-  concat: (other) => Sum(x + other.x),
-});
+// const Sum = (x) => ({
+//   x,
+//   concat: (other) => Sum(x + other.x),
+// });
 
-const Product = (x) => ({
-  x,
-  concat: (other) => Product(x * other.x),
-});
+// const Product = (x) => ({
+//   x,
+//   concat: (other) => Product(x * other.x),
+// });
 
-const Any = (x) => ({
-  x,
-  concat: (other) => Any(x || other.x),
-});
+// const Any = (x) => ({
+//   x,
+//   concat: (other) => Any(x || other.x),
+// });
 
-const All = (x) => ({
-  x,
-  concat: (other) => All(x && other.x),
-});
+// const All = (x) => ({
+//   x,
+//   concat: (other) => All(x && other.x),
+// });
 
 // // whatever it's holding that's define it's behavior
 // // if Id is holding monoid then it is monoid too
@@ -138,7 +145,7 @@ const All = (x) => ({
 
 // concat Method
 
-// let's a concat a couple of functors together
+// let's concat a couple of functors together
 
 // const res = Right("hello").concat(Right(" world")); // Right("hello world")
 
@@ -165,18 +172,45 @@ const All = (x) => ({
 
 // monoids capture choice
 
-const Alternative = (ex) => ({
-  ex,
-  concat: (other) => Alternative(other.ex.isLeft ? ex : ex.concat(other.ex)),
-});
+// const Alternative = (ex) => ({
+//   ex,
+//   concat: (other) => Alternative(other.ex.isLeft ? ex : ex.concat(other.ex)),
+// });
 
 // const res = Alternative(Right("hi")).concat(
 //   Alternative(Right(" !!!!!")).concat(Alternative(Left("error occured")))
 // );
 
-const res = List([Right("hi"), Right(" !!!"), Left("error")]).foldMap(
-  Alternative,
-  Alternative(Right(""))
-);
+// const res = List([Right("hi"), Right(" !!!"), Left("error")]).foldMap(
+//   Alternative,
+//   Alternative(Right(""))
+// );
 
-res.ex.fold(console.log, console.log);
+// res.ex.fold(console.log, console.log);
+
+// ==========================================================
+// monoids use cases
+
+// const getAppAlerts = () => fetch("/alerts").then((x) => x.json());
+// const getDirectMessages = () => fetch("/dm").then((x) => x.json());
+// getAppAlerts.concat(getDirectMessages);
+// Promise([{id : 1, msg : "Policy Update"}, {id : 2, msg : "hi from india"}])
+
+// we can combine two api calls and get collect all their results
+// it's associative and closed => parallel
+
+// ==========================================================
+
+// const getPost = () =>
+//   fetch("/post")
+//     .then((x) => x.json())
+//     .then(Map);
+
+// const getComments = () =>
+//   fetch("/comments")
+//     .then((x) => x.json())
+//     .then((comments) => Map({ comments }));
+
+// getPost().concat(getComments());
+
+// Promise(Map({id : 3, body : 'Redux is over', comments : []}))
