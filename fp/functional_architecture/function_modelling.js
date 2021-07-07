@@ -1,4 +1,5 @@
 const { Either } = require("./lib/types");
+const { List } = require("immutable-ext");
 
 const toUpper = (x) => x.toUpperCase();
 const exclaim = (x) => x.concat("!");
@@ -83,14 +84,75 @@ const exclaim = (x) => x.concat("!");
 // this is function monad and it is insanely helpful during function architecture
 
 // ===================================================================================
+
 // The Endo Functor
 
-const Fn = (run) => ({
+// what if we would rahter instead of combining functions by running both and then combining the results
+// we can do this by making a composition like function composition as concatination
+
+// const Fn = (run) => ({
+//   run,
+//   chain: (f) => Fn((x) => f(run(x)).run(x)),
+//   map: (f) => Fn((x) => f(run(x))),
+//   concat: (other) => Fn((x) => run(x).concat(other.run(x))),
+// });
+
+// Fn.of = (x) => Fn(() => x);
+// Fn.ask = Fn((x) => x);
+
+// [toUpper, exclaim].foldMap(Endo, Endo.empty());
+// hello => HELLO!
+// it should gonna run through a pipeline of functions and new composition
+// The reason it's called ENDO which is weird is because this only works with endomorphisms
+// means it only works from types a to a, string to string, task to task
+// it has the same input as output
+// and the reason for that is because we know we can just compose them without running into any type
+// problems where they don't compose
+
+// const Endo = (run) => ({
+//   run,
+//   concat: (other) => Endo((x) => run(other.run(x))),
+// });
+
+// Endo.empty = () => Endo((x) => x);
+
+// const res = List([toUpper, exclaim]).foldMap(Endo, Endo.empty()).run("hello");
+// // hello => HELLO!
+// console.log(res);
+
+// ================================================================
+
+// contramap
+
+// contravariant functors are functors that operate on their first value
+// so we have  a function from a to string (a -> string)
+// and we know that it will always return us a string
+// we can take in any a to begin with. we can map over the a and turn it into b but it always end up  on a string
+
+// we can do this with sort function, perdicate functions (they take in anything and return only boolean value)
+// sorting functions return enum of -1, 0, 1
+
+// this is kindaa like a super power
+// let's define it with the name Reducer find it below
+
+// (acc, a) => acc
+
+const Reducer = (run) => ({
   run,
-  chain: (f) => Fn((x) => f(run(x)).run(x)),
-  map: (f) => Fn((x) => f(run(x))),
-  concat: (other) => Fn((x) => run(x).concat(other.run(x))),
+  contramap: (f) => Reducer((acc, x) => run(acc, f(x))),
 });
 
-Fn.of = (x) => Fn(() => x);
-Fn.ask = Fn((x) => x);
+Reducer(login)
+  .conact(Reducer(changePage))
+  .contramap((pay) => pay.currentPage)
+  .run(state, { user: {}, currentPage: {} });
+
+// contramap hits arguments before it comes in
+// purpose of contramap is to keep the entire paylaod going through the system, but plucking thigns off
+// and passing it into inner functions
+// it's just one usecase of contramap
+// it's almost like a before hook
+// whereas map would be like an after hook
+// it gives us the ability to kind of get in there and change the argument before it arrives.
+// it's also useful in situations where you have a fixed output and the fixed output is static,
+// but the input is not you're able to pre-compose instead of post compose to be able to build out applications
