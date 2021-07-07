@@ -46,3 +46,5 @@ const obj = { name: "", email: "faizgmail.com" };
 const res = validate(validations, obj);
 
 res.fold(console.error, console.log);
+
+module.exports = { validate };
