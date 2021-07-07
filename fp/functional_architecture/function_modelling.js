@@ -156,3 +156,67 @@ Reducer(login)
 // it gives us the ability to kind of get in there and change the argument before it arrives.
 // it's also useful in situations where you have a fixed output and the fixed output is static,
 // but the input is not you're able to pre-compose instead of post compose to be able to build out applications
+
+// ====================================================================
+
+// function modelling practice assignment
+
+// Definitions
+// const Endo = (run) => ({
+//   run,
+//   concat: (other) => Endo((x) => other.run(run(x))),
+// });
+
+// Endo.empty = () => Endo((x) => x);
+
+// // Ex1:
+// // =========================
+
+// const classToClassName = (html) => html.replace(/class\=/gi, "className=");
+
+// const updateStyleTag = (html) => html.replace(/style="(.*)"/gi, "style={{$1}}");
+
+// const htmlFor = (html) => html.replace(/for=/gi, "htmlFor=");
+
+// const ex1 = (html) =>
+//   // htmlFor(updateStyleTag(classToClassName(html))) //rewrite using Endo
+//   Endo(htmlFor)
+//     .concat(Endo(updateStyleTag))
+//     .concat(Endo(classToClassName))
+//     .run(html);
+
+// // here we are capturing function composition via monoids
+// // since the functions always return the same input and same output type
+// // we can effortlessly compose the types
+// // we can also alternatively do like below by using list and foldMap
+
+// // const ex1 = html =>
+// // List.of([htmlFor, updateStyleTag, classToClassName]).foldMap(Endo, Endo.empty()).run(html)
+
+// // Ex2: model a predicate function :: a -> Bool and give it contramap() and concat(). i.e. make the test work
+// // =========================
+// const Pred = (run) => ({
+//   run,
+//   contramap: (f) => Pred((x) => run(f(x))),
+//   concat: (other) => Pred((x) => run(x) && other.run(x)),
+// });
+
+// // Ex3:
+// // =========================
+// const extension = (file) => file.name.split(".")[1];
+
+// const matchesAny = (regex) => (str) => str.match(new RegExp(regex, "ig"));
+
+// const matchesAnyP = (pattern) => Pred(matchesAny(pattern)); // Pred(str => Bool)
+
+// // TODO: rewrite using matchesAnyP. Take advantage of contramap and concat
+// const ex3 = (file) =>
+//   // matchesAny('txt|md')(extension(file)) && matchesAny('functional')(file.contents)
+//   matchesAnyP("txt|md")
+//     .contramap(extension)
+//     .concat(matchesAnyP("functional").contramap((f) => f.contents))
+//     .run(file);
+
+// ======================================================
+
+// Function Modeling Equivalances
