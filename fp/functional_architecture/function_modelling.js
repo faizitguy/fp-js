@@ -137,15 +137,15 @@ const exclaim = (x) => x.concat("!");
 
 // (acc, a) => acc
 
-const Reducer = (run) => ({
-  run,
-  contramap: (f) => Reducer((acc, x) => run(acc, f(x))),
-});
+// const Reducer = (run) => ({
+//   run,
+//   contramap: (f) => Reducer((acc, x) => run(acc, f(x))),
+// });
 
-Reducer(login)
-  .conact(Reducer(changePage))
-  .contramap((pay) => pay.currentPage)
-  .run(state, { user: {}, currentPage: {} });
+// Reducer(login)
+//   .conact(Reducer(changePage))
+//   .contramap((pay) => pay.currentPage)
+//   .run(state, { user: {}, currentPage: {} });
 
 // contramap hits arguments before it comes in
 // purpose of contramap is to keep the entire paylaod going through the system, but plucking thigns off
@@ -220,3 +220,27 @@ Reducer(login)
 // ======================================================
 
 // Function Modeling Equivalances
+
+const Reducer = (run) => ({
+  run,
+  contramap: (f) => Reducer((acc, x) => run(acc, f(x))),
+  concat: (other) => Reducer((acc, x) => other.run((acc, x), x)),
+});
+
+const checkCards = (email, pass) => email === "admin" && pass === 123;
+
+const login = (state, payload) =>
+  payload.email
+    ? Object.assign({}, state, {
+        loggedIn: checkCards(payload.email, payload.pass),
+      })
+    : state;
+
+const setPrefs = (state, payload) =>
+  payload.prefs ? Object.assign({}, state, { prefs: payload.prefs }) : state;
+
+const reducer = Reducer(login).concat(Reducer(setPrefs));
+
+const state = { loggedIn: false, prefs: {} };
+const payload = { email: "admin", pass: 123, prefs: { bgColor: "#000" } };
+console.log(reducer.run(state, payload));
