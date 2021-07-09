@@ -3,16 +3,33 @@
 const { Task } = require("./lib/types");
 const { save, all } = require("./lib/db");
 const { last } = require("ramda");
+const { taggedSum } = require("daggy");
+const { liftF } = require("./lib/free");
+
+const Console = taggedSum("Console", { Question: ["q"], Print: ["s"] });
+const Db = taggedSum("Db", {
+  Save: ["table", "record"],
+  All: ["table", "query"],
+});
+
+const print = (s) => liftF(Console.Print(s));
+const question = (s) => liftF(Console.Question(s));
 
 const AuthorTable = "Authors";
 const Author = (name) => ({ name });
+
 const PostTable = "Post";
 const Post = (title, body) => ({ title, body });
+
+const dbAll = (table, query) => liftF(Db.All(table, query));
+const dbSave = (table, record) => liftF(Db.Save(table, record));
 
 const readline = require("readline").createInterface({
   input: process.stdin,
   output: process.stdout,
 });
+
+const writeOutput = (s) => Task((_rej, res) => res(console.log(s)));
 
 const getInput = (q) =>
   Task((rej, res) => readline.question(q, (i) => res(i.trim())));
