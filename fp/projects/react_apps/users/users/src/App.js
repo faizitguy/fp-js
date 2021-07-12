@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <div {...css({ fontFamily: "sans-serif" })}>
-        <h1 className={css(headerStyle)}>Todo List</h1>
+        <h1 className={css(headerStyle)}>User List</h1>
         <div className={css(flexCenter)}>
           {/* <UserList /> */}
           <Todo />

@@ -4,20 +4,20 @@ export const CHANGE_NAME =
     [name]: value,
   });
 
-export const ADD_TODO = (task) => (state, props) => ({
-  todos: [
-    ...state.todos,
-    { id: new Date().toLocaleString(), task: task, completed: false },
+export const ADD_SKILL = (skill) => (state, props) => ({
+  skills: [
+    ...state.skills,
+    { id: new Date().toLocaleString(), skill: skill, rating: 4.5 },
   ],
-  todo: "",
+  skill: "",
 });
 
-export const DELETE_TODOS = () => (state, props) => ({
-  todos: [],
+export const DELETE_SKILLS = () => (state, props) => ({
+  skills: [],
 });
 
-export const DELETE_TODO = (id) => (state, props) => ({
-  todos: [...state.todos.filter((item) => item.id !== id)],
+export const DELETE_SKILL = (id) => (state, props) => ({
+  skills: [...state.skills.filter((item) => item.id !== id)],
 });
 
 export const DEFAULT = () => (state, props) => state;
