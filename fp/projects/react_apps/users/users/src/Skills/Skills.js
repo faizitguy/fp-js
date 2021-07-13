@@ -165,6 +165,12 @@ export default class Skills extends React.Component {
               ))}
           </table>
         </div>
+        <div>
+          <h3> Features</h3>
+          <p> 1. A user can add skills </p>
+          <p>2. A user can delete skill</p>
+          <p>3. A user can filter skills</p>
+        </div>
       </div>
     );
   }
