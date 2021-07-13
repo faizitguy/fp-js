@@ -5,11 +5,16 @@ export const CHANGE_NAME =
   });
 
 export const ADD_SKILL =
-  ({ skill, rating }) =>
+  ({ skill, rating, category }) =>
   (state, props) => ({
     skills: [
       ...state.skills,
-      { id: new Date().toLocaleString(), skill: skill, rating: rating },
+      {
+        id: new Date().toLocaleString(),
+        skill: skill,
+        rating: rating,
+        category: category,
+      },
     ],
     skill: "",
   });
@@ -22,10 +27,8 @@ export const DELETE_SKILL = (id) => (state, props) => ({
   skills: [...state.skills.filter((item) => item.id !== id)],
 });
 
-// export const CHANGE_RATING =
-//   ({ name, value }) =>
-//   (state, props) => ({
-//     [name]: value,
-//   });
+export const CHANGE_CATEGORY = (type) => (state, props) => ({
+  selectedCategory: type,
+});
 
 export const DEFAULT = () => (state, props) => state;

@@ -1,18 +1,27 @@
 import React, { useState } from "react";
 import * as actions from "./actions";
 import "./Todo.css";
+import * as R from "ramda";
 
 const CHANGE_NAME = "CHANGE_NAME";
 const DEFAULT = "DEFAULT";
 const ADD_SKILL = "ADD_SKILL";
 const DELETE_SKILLS = "DELETE_SKILLS";
 const DELETE_SKILL = "DELETE_SKILL";
+const CHANGE_CATEGORY = "CHANGE_CATEGORY";
+
+const getSkills = (categoryType = "technical") =>
+  R.pipe(R.groupBy(R.prop("category")), R.prop(categoryType));
+
+console.log("getSkills", getSkills());
 
 export default class Todo extends React.Component {
   state = {
-    skills: [{ id: 1, skill: "react", rating: 4.2 }],
+    skills: [{ id: 1, skill: "react", rating: 4, category: "technical" }],
     skill: "",
     rating: "",
+    category: "",
+    selectedCategory: "technical",
   };
 
   reduce = (action) => {
@@ -23,9 +32,15 @@ export default class Todo extends React.Component {
     });
   };
 
+  getSkillsList = () => {
+    const { selectedCategory, skills } = this.state;
+    console.log("skillsList", selectedCategory, skills);
+    return getSkills(selectedCategory)(skills);
+  };
   render() {
     return (
       <div>
+        {console.log(this.getSkillsList(), "getSkillsList")}
         <input
           name="skill"
           placeholder="add skill..."
@@ -39,6 +54,21 @@ export default class Todo extends React.Component {
             })
           }
         />
+        <select
+          name="category"
+          onChange={(event) =>
+            this.reduce({
+              type: CHANGE_NAME,
+              payload: { name: event.target.name, value: event.target.value },
+            })
+          }
+          value={this.state.category}
+        >
+          <option>select category...</option>
+          <option value="technical">Technical Skill</option>
+          <option value="soft">Soft Skill</option>
+        </select>
+
         <select
           name="rating"
           onChange={(event) =>
@@ -59,7 +89,11 @@ export default class Todo extends React.Component {
         <button
           onClick={this.reduce.bind(null, {
             type: ADD_SKILL,
-            payload: { skill: this.state.skill, rating: this.state.rating },
+            payload: {
+              skill: this.state.skill,
+              rating: this.state.rating,
+              category: this.state.category,
+            },
           })}
         >
           Add
@@ -72,7 +106,25 @@ export default class Todo extends React.Component {
             justifyContent: "center",
             padding: "10px",
           }}
-        ></div>
+        >
+          Filter By :
+          <button
+            onClick={this.reduce.bind(null, {
+              type: CHANGE_CATEGORY,
+              payload: "technical",
+            })}
+          >
+            Technical Skill
+          </button>
+          <button
+            onClick={this.reduce.bind(null, {
+              type: CHANGE_CATEGORY,
+              payload: "soft",
+            })}
+          >
+            Soft Skill
+          </button>
+        </div>
         <div>
           <button
             onClick={this.reduce.bind(null, {
@@ -85,14 +137,16 @@ export default class Todo extends React.Component {
             <tr>
               <th>skill name</th>
               <th>rating</th>
+              <th>Category</th>
               <th>Delete</th>
             </tr>
-            {this.state.skills &&
-              this.state.skills.map((item) => (
+            {this.getSkillsList &&
+              this.getSkillsList().map((item) => (
                 <tr>
                   {" "}
                   <td>{item.skill}</td>
                   <td>{item.rating}</td>
+                  <td>{item.category}</td>
                   <td>
                     <button
                       onClick={this.reduce.bind(null, {
@@ -111,20 +165,4 @@ export default class Todo extends React.Component {
       </div>
     );
   }
-  // const [todos, setTodos] = useState([
-  //   { id: 1, task: "read", completed: true },
-  // ]);
-  // const [todo, setTodo] = useState("");
-  // const handleAdd = () => {
-  //   setTodos([...todos, { id: new Date(), task: todo, completed: false }]);
-  // };
-  // return (
-  //   <div>
-  //     <h1> Todo</h1>
-  //     <input placeholder="add todo" onChange={(e) => setTodo(e.target.value)} />
-  //     <button onClick={() => handleAdd()}>Add</button>
-  //     <h1>{todo}</h1>
-  //     <div>{todos && todos.map((task) => <li>{task.task}</li>)}</div>
-  //   </div>
-  // );
 }
