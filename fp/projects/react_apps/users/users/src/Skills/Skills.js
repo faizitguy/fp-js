@@ -42,7 +42,7 @@ export default class Skills extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div className="add-skill">
         {console.log(this.getSkillsList(), "getSkillsList")}
         <input
           name="skill"
@@ -143,7 +143,7 @@ export default class Skills extends React.Component {
               <th>Category</th>
               <th>Delete</th>
             </tr>
-            {this.getSkillsList &&
+            {this.getSkillsList() &&
               this.getSkillsList().map((item) => (
                 <tr>
                   {" "}
