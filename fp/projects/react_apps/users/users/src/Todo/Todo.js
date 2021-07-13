@@ -12,6 +12,7 @@ export default class Todo extends React.Component {
   state = {
     skills: [{ id: 1, skill: "react", rating: 4.2 }],
     skill: "",
+    rating: "",
   };
 
   reduce = (action) => {
@@ -58,7 +59,7 @@ export default class Todo extends React.Component {
         <button
           onClick={this.reduce.bind(null, {
             type: ADD_SKILL,
-            payload: this.state.skill,
+            payload: { skill: this.state.skill, rating: this.state.rating },
           })}
         >
           Add
