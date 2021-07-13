@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as actions from "./actions";
-import "./Todo.css";
+import "./Skills.css";
 import * as R from "ramda";
 
 const CHANGE_NAME = "CHANGE_NAME";
@@ -15,9 +15,12 @@ const getSkills = (categoryType = "technical") =>
 
 console.log("getSkills", getSkills());
 
-export default class Todo extends React.Component {
+export default class Skills extends React.Component {
   state = {
-    skills: [{ id: 1, skill: "react", rating: 4, category: "technical" }],
+    skills: [
+      { id: 1, skill: "react", rating: 4, category: "technical" },
+      { id: 1, skill: "email writing", rating: 3, category: "soft" },
+    ],
     skill: "",
     rating: "",
     category: "",

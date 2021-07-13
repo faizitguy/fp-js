@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import UserList from "./UserList";
 import { css } from "glamor";
-import Todo from "./Todo/Todo";
+import Skills from "./Skills/Skills";
 
 let headerStyle = {
   textAlign: "center",
@@ -23,7 +22,7 @@ class App extends Component {
         <h1 className={css(headerStyle)}>Skills List</h1>
         <div className={css(flexCenter)}>
           {/* <UserList /> */}
-          <Todo />
+          <Skills />
         </div>
       </div>
     );
