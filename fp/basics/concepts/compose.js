@@ -31,22 +31,6 @@
 
 // //console.log(filterArticles(breakout(capitalize(noPunct(trim(str))))));
 
-// const pipe = function (...fns) {
-//   return function (x) {
-//     return fns.reduce(function (v, f) {
-//       return f(v);
-//     }, x);
-//   };
-// };
-
-// // const compose = function (...fns) {
-// //   return function (x) {
-// //     return fns.reduceRight(function (v, f) {
-// //       return f(v);
-// //     }, x);
-// //   };
-// // };
-
 // const prepareString = pipe(trim, noPunct, capitalize, breakout, filterArticles);
 
 // /*const prepareString = compose(
@@ -69,5 +53,23 @@ const trim = (str) => str.trim();
 const split = (str) => str.split(" ");
 const check = (arr) => arr.length;
 
-console.log(check(split(trim("Faiz Ahmed Khan"))));
+console.log(check(split(trim("Let's analyze how many you typed"))));
+
 // console.log(checkLength("Faiz Ahmed Khan"));
+
+const arr = [1, 2, 3, 4, 5];
+
+const doubleIt = arr.map((n) => n + n);
+const filterIt = doubleIt.filter((n) => n > 5);
+const totalIt = filterIt.reduce((ac, v) => ac + v);
+
+const newRes = arr
+  .map((n) => n + n)
+  .filter((n) => n > 5)
+  .reduce((ac, v) => ac + v);
+
+console.log(newRes, "newRes");
+console.log(arr, "arr");
+console.log(doubleIt, "map");
+console.log(filterIt, "filter");
+console.log(totalIt, "reduce");

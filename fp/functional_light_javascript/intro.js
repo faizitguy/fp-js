@@ -90,3 +90,39 @@
 
 // console.log(a); // 6
 // console.log(b); // 9
+
+// Function is the semantic relationship between input and computed output
+
+// side effects
+
+// I/O (console, files, etc)
+// Database Storage
+// Network calls
+// DOM
+// Time stamps
+// Random Numbers
+// CPU Heat
+// Any program that runs gonna produce heat by the CPU and that is the side effect
+// that is an observable change to the state of the system.
+
+// CPU Time Delay
+// Observable delay in time where one program can't run because another program is currently running
+// that's a side effect
+
+// Not only is it practically impossible to avoid all side effects
+// it's also theoratically impossible to avoid them
+
+// when we say avoid side effects it means MINIMIZE side effects
+
+// A program that had no side effects which can't even exist
+
+// It's not bad to use side effects
+// but they impurify the benefits of functional programming
+
+// if we do side effects we wanna make sure that they we are very intentional about them
+// rather than simply not caring about side effects at all
+
+// No such thing as "no side effects"
+// Avoid them where possible, make them obvious otherwise
+
+// pure function calls
