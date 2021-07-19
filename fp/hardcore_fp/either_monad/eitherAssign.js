@@ -203,3 +203,14 @@ const checkAndhra = (address) =>
     );
 
 console.log(checkAndhra(address));
+
+const checkName = (name) =>
+  fromNullable(name)
+    .map((name) => name.toUpperCase())
+    .fold(
+      () => "no name present",
+      (x) => x
+    );
+
+const newRes = checkName("");
+console.log(newRes);

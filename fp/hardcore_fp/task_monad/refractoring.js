@@ -27,8 +27,10 @@ const readFile = (path, enc) =>
   );
 
 const writeFile = (path, contents) =>
-  fs.writeFile(path, contents, (err, contents) =>
-    err ? rej(err) : res(contents)
+  Task((rej, res) =>
+    fs.writeFile(path, contents, (err, contents) =>
+      err ? rej(err) : res(contents)
+    )
   );
 
 const app = () =>
