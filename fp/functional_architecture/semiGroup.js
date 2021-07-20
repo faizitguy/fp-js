@@ -214,3 +214,26 @@
 // getPost().concat(getComments());
 
 // Promise(Map({id : 3, body : 'Redux is over', comments : []}))
+
+// semigroup
+
+// const Sum = (x) => ({
+//   x,
+//   concat: (other) => Sum(x + other.x),
+// });
+
+// const res = Sum(5).concat(Sum(10));
+// console.log(res);
+
+// monoid => semigroup + identity
+
+// const Sum = (x) => ({
+//   x,
+//   concat: (other) => Sum(x + other.x),
+// });
+
+// Sum.empty = () => Sum(0);
+
+// const res = [].map(Sum).reduce((acc, n) => acc.concat(n), Sum.empty()); // 0
+
+// console.log(res);
